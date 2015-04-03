@@ -47,11 +47,13 @@ class hoshen_kopelman {
 
   int clusters(simplmat<int>& matrix);
   
-  int multiClusters(simplmat<int>& matrix);
+  vector<pair<int, unsigned int>> multiClusters(simplmat<int>& matrix,const string& output="");
   
   int make_set();
 
   void check_labelling(simplmat<int>& matrix);
+  
+
 };
 
 #endif

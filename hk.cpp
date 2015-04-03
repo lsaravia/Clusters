@@ -125,40 +125,13 @@ int hoshen_kopelman::clusters(simplmat<int>& matrix) {
 
     delete []new_labels;
 
-
-    // Count the clusters and max cluster
-    //
-    int e=0;
-    vector <int> sizeClus(numClus,0);
-    for(int i=0; i<m; i++)
-        for(int j=0; j<n; j++)
-            if ((e=matrix(i,j))) { 
-                sizeClus[e-1]++;
-
-            }
-
-    int maxClus = *max_element(sizeClus.begin(),sizeClus.end());
-  
-    // Output the sizes of clusters
-    cout << "numClusters\tmaxCluster\n";
-    cout << numClus << "\t" << maxClus << endl;
-    cout << endl;
-    cout << endl;
-    
-    // Title 
-    cout << "Species\tClusterSize\n";
-    for(const auto &s : sizeClus){
-        cout << "1\t" << s << endl;
-    }
-    cout << endl;
-
-  return numClus;
+    return numClus;
 }
 
 /* Label the clusters in "matrix" belonging to different types.  
  * Return the total number of clusters found. 
  */
-int hoshen_kopelman::multiClusters(simplmat<int>& matrix) {
+vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& matrix,const string& output) {
 
     int m = matrix.getRows();
     int n = matrix.getCols();
@@ -168,7 +141,7 @@ int hoshen_kopelman::multiClusters(simplmat<int>& matrix) {
     int sumSp=0;
     typedef unordered_map<int,unsigned int> CounterMap;
     CounterMap counts;
-    unordered_multimap<int, unsigned int> speciesClus;
+    vector<pair<int, unsigned int>> speciesClus;
     
     // First find the different species in matrix
     // this counts the number of each species
@@ -217,38 +190,45 @@ int hoshen_kopelman::multiClusters(simplmat<int>& matrix) {
                         sizeClus[e-1]++;
                       
                     }
-            
+            // Calculate max cluster by species
             maxClus = *max_element(sizeClus.begin(),sizeClus.end());
             iter->second = maxClus;
             e = iter->first;
             for(const auto &s : sizeClus)
-                speciesClus.insert(make_pair(e,s));
+                speciesClus.push_back(make_pair(e,s));
         } 
         else {
             maxClus = iter->second;
-            speciesClus.insert(make_pair(e,maxClus));
+            speciesClus.push_back(make_pair(e,maxClus));
         }
         //cout << maxClus << "\t|\t";
         totClus += numClus;
     }
 
-    // Title 
-    cout << "Species\tmaxCluster\n";
-    
-    for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+    if(output=="max")
     {
-        cout << iter->first << "\t" << iter->second << endl;
-    }            
-    cout << endl;
-    cout << endl;
-    
-    // Title 
-    cout << "Species\tClusterSize\n";
-    for(auto ites=speciesClus.begin(); ites!=speciesClus.end(); ++ites){
-        cout << ites->first << "\t" << ites->second << endl;
+        auto maxClus = max_element(speciesClus.begin(), speciesClus.end(),
+      [](const pair<int, unsigned>& p1, const pair<int, unsigned>& p2) {
+        return p1.second < p2.second; });
+        speciesClus.assign(1, make_pair(totClus,maxClus->second));
     }
-    cout << endl;
-    return(totClus);
+    // Title 
+//    cout << "Species\tmaxCluster\n";
+//    
+//    for(auto iter=counts.begin(); iter!=counts.end(); ++iter)
+//    {
+//        cout << iter->first << "\t" << iter->second << endl;
+//    }            
+//    cout << endl;
+//    cout << endl;
+//    
+//    // Title 
+//    cout << "Species\tClusterSize\n";
+//    for(auto ites=speciesClus.begin(); ites!=speciesClus.end(); ++ites){
+//        cout << ites->first << "\t" << ites->second << endl;
+//    }
+//    cout << endl;
+    return(speciesClus);
 }
 
 /* This procedure checks to see that any occupied neighbors of an occupied site

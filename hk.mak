@@ -18,7 +18,7 @@ SDLDEFS = -D__XWIN__
 I_DIRS=-I../../fortify -I.. -I../../randlib/src -I../CaNew
 #P_DEFS=-DGRAPHICS -DPERIODIC_BOUNDARY
 
-#CFLAGS = -O3 -Wall -Ic:/cpp/fortify -Ic:/cpp/canew -DGRAPHICS -DFORTIFY -fexternal-templates 
+#CXXFLAGS = -O3 -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 CXXFLAGS = -g -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
 O = main_hk.o hk.o RWFile.o 

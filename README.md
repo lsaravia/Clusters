@@ -1,27 +1,32 @@
 
 # hk: Hoshen-Kopelman algorithm for cluster sizes of multiple/single types
 
-This program implements a C++ class with Hoshen-Kopelman algorithm for cluster labeling of multiple types
+This program implements a C++ class with Hoshen-Kopelman algorithm for cluster labeling of single or multiple types
 
-The input file is a matrix with different <int> values (species)
-and I it returns the cluster sizes and max cluster of of all species.
+The compiled program takes as input a matrix with different <int> values (species)
+and I it returns the cluster sizes or the max cluster of all species.
 
 ## Usage 
 
-    hk file.sed BI|SP
+    hk inputFile.sed outputFile BI|SP outputType{max|""}
 
-An file.sed is ascii file with the dimension in the first line, the kind of data SP|BI in the second line and a matrix in subsecuent lines. An example of the sed format is given in test_sp.sed.
+* **inputFile.sed** is ascii file with the dimension in the first line, the kind of data SP|BI in the second line and a matrix in subsecuent lines. An example of the sed format is given in test_sp.sed test_bi.sed
 
-* sed file types: 
+* **outputFile** if the file exist it adds the new output
+
+* **BI|SP** are the sed file types: 
 
     BI: in this cases the program counts the cluster formed by values >0 and separated by 0
 
     SP: the clusters are formed by the different values and also separated by 0 
 
-* It uses code from <https://github.com/lsaravia/SpatialAnalysis> 
+* **outputType** if null all the clusters sizes for all species are given. If max only the number of clusters and the maximun cluster size is obtained. 
+
+It uses code from <https://github.com/lsaravia/SpatialAnalysis> 
 
     smattpl.h
     RWFile.h
+    RWFile.cpp
 
 # General License
 
