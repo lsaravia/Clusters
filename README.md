@@ -20,7 +20,13 @@ and I it returns the cluster sizes or the max cluster of all species.
 
     SP: the clusters are formed by the different values and also separated by 0 
 
-* **outputType** if null all the clusters sizes for all species are given. If max only the number of clusters and the maximun cluster size is obtained. 
+* **outputType** 
+    * if null all the clusters sizes for all species are given. 
+    * If max 3 pairs are returned :
+                                    species_number, max_cluster_size, 
+                                    species_number, total_number_clusters
+                                    species_number, abundance_species(which has the max cluster)
+
 
 It uses code from <https://github.com/lsaravia/SpatialAnalysis> 
 
