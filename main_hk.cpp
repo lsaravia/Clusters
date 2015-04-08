@@ -61,9 +61,9 @@ int main(int argc, char * argv[])
     simplmat <int> matrix;
 
 
-    if( argc < 5)
+    if( argc < 4)
     {
-      cerr << "Hoshen kopelman algorithm Patch Stats\n";
+      cerr << "Cluster sizes using Hoshen Kopelman algorithm\n";
       cerr << "Usage: hk inputFile outputFile fileType{BI,SP} output{max|}" << endl;
       cerr << "File type BI: patches are elements >0" << endl;
       cerr << "File type SP: patches are different elements (Species)" << endl;
@@ -145,7 +145,7 @@ int main(int argc, char * argv[])
         // Title
         if(privez){
             if(out=="max")
-                dout << "numClusters\tmaxClusterSize\n";
+                dout << "Species\tmaxClusterSize\n";
             else
                 dout << "Species\tClusterSize\n";
         }

@@ -129,7 +129,11 @@ int hoshen_kopelman::clusters(simplmat<int>& matrix) {
 }
 
 /* Label the clusters in "matrix" belonging to different types.  
- * Return the total number of clusters found. 
+ * Return if output="" all patch sizes
+ * 
+ *        if output="max" returns 3 pairs: species max_cluster_size, 
+ *                                          species total_number_clusters
+ *                                          species total_species(which has the max cluster)
  */
 vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& matrix,const string& output) {
 
@@ -180,7 +184,7 @@ vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& ma
         // Count the cluster sizes and fill an unordered_map
         // Calculate the max cluster 
         //
-        int maxClus=0;
+        //int maxClus=0;
         if(numClus>1)
         {
             vector <int> sizeClus(numClus,0);
@@ -191,15 +195,15 @@ vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& ma
                       
                     }
             // Calculate max cluster by species
-            maxClus = *max_element(sizeClus.begin(),sizeClus.end());
-            iter->second = maxClus;
+            // maxClus = *max_element(sizeClus.begin(),sizeClus.end());
+            // iter->second = maxClus;
             e = iter->first;
             for(const auto &s : sizeClus)
                 speciesClus.push_back(make_pair(e,s));
         } 
         else {
-            maxClus = iter->second;
-            speciesClus.push_back(make_pair(e,maxClus));
+            //maxClus = iter->second;
+            speciesClus.push_back(make_pair(e,iter->second));
         }
         //cout << maxClus << "\t|\t";
         totClus += numClus;
@@ -210,7 +214,10 @@ vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& ma
         auto maxClus = max_element(speciesClus.begin(), speciesClus.end(),
       [](const pair<int, unsigned>& p1, const pair<int, unsigned>& p2) {
         return p1.second < p2.second; });
-        speciesClus.assign(1, make_pair(totClus,maxClus->second));
+        
+        speciesClus.assign(1, make_pair(maxClus->first,maxClus->second));
+        speciesClus.push_back(make_pair(maxClus->first,totClus));
+        speciesClus.push_back(make_pair(maxClus->first,counts[maxClus->first] ));
     }
     // Title 
 //    cout << "Species\tmaxCluster\n";
