@@ -21,7 +21,8 @@ and I it returns the cluster sizes or the max cluster of all species.
     SP: the clusters are formed by the different values and also separated by 0 
 
 * **outputType** 
-    * if null all the clusters sizes for all species are given. 
+    * if null all the clusters sizes for all species are given. The first row is the spanning species and total abundance of it, if there is no spanning species 0 0 is returned. Then species and cluster size.
+
     * If max 4 pairs are returned :
                                     species_number, max_cluster_size, 
                                     species_number, total_number_clusters

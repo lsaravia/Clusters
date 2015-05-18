@@ -134,7 +134,7 @@ int hoshen_kopelman::clusters(simplmat<int>& matrix) {
  *        if output="max" returns 4 pairs: species max_cluster_size, 
  *                                          species total_number_clusters
  *                                          species total_species abundance(which has the max cluster)
- *                                          spanning_species total_species_abundance
+ *                                          spanning_species total_species_abundance (of spanning sp)
  */
 vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& matrix,const string& output) {
 
@@ -237,9 +237,12 @@ vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& ma
         speciesClus.push_back(make_pair(msp,totClus));
         speciesClus.push_back(make_pair(msp,counts[msp] ));
         if(spanClus.empty())
+            spanClus.push_back(make_pair(0,0)); // 0,0 if no spanning cluster
+        speciesClus.push_back(spanClus[0]);     // spanning sp. abundance of spanning sp
+        if(spanClus.empty())
             spanClus.push_back(make_pair(0,0));
-        speciesClus.push_back(spanClus[0]);
-   }
+        speciesClus.insert(speciesClus.begin(), spanClus[0]);
+    }
     // Title 
 //    cout << "Species\tmaxCluster\n";
 //    
