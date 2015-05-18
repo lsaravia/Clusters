@@ -239,6 +239,9 @@ vector<pair<int, unsigned int>> hoshen_kopelman::multiClusters(simplmat<int>& ma
         if(spanClus.empty())
             spanClus.push_back(make_pair(0,0)); // 0,0 if no spanning cluster
         speciesClus.push_back(spanClus[0]);     // spanning sp. abundance of spanning sp
+    }
+    else
+    {
         if(spanClus.empty())
             spanClus.push_back(make_pair(0,0));
         speciesClus.insert(speciesClus.begin(), spanClus[0]);
