@@ -25,10 +25,10 @@ and I it returns the cluster sizes or the max cluster of all species.
 
     * If max 4 pairs are returned :
 
-                                    species_number, max_cluster_size 
-                                    species_number, total_number_clusters
-                                    species_number, abundance_species(which has the max cluster)
-                                    spanning_species abundance_of_spanning_species
+            species_number, max_cluster_size 
+            species_number, total_number_clusters
+            species_number, abundance_species(which has the max cluster)
+            spanning_species abundance_of_spanning_species
  
 
 It uses code from <https://github.com/lsaravia/SpatialAnalysis> 
