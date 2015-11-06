@@ -21,21 +21,28 @@ I_DIRS=-I../../fortify -I.. -I../../randlib/src -I../CaNew
 #CXXFLAGS = -O3 -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 CXXFLAGS = -g -Wall -std=gnu++0x $(I_DIRS) $(X11INCS)  $(SDLDEFS) $(P_DEFS)
 
-O = main_hk.o hk.o RWFile.o 
+O = main_hk.o hk.o 
 
 L = -lm -ltiff
 
-hk: $(O)
-	g++ -o hk $(O) $(L)
+# Compile in 64 bit or 32 bit 
+LBITS := $(shell getconf LONG_BIT)
+ifeq ($(LBITS),64)
+   E = hk64
+else
+   E = hk
+endif
+
+$(E): $(O) 
+	g++ -o $(E) $(O) $(L)
+
 
 clean:
-	rm hk $(O)
+	rm $(E) $(O)
 
 
 # DEPENDENCIES
 
-RWFile.o: RWFile.cpp RWFile.h
-
-hk.o: main_hk.cpp hk.cpp RWFile.cpp RWFile.h smattpl.h
+hk.o: main_hk.cpp hk.cpp RWFile.h smattpl.h
 
 
